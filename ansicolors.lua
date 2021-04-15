@@ -96,5 +96,12 @@ local function ansicolors( str )
   return replaceCodes('%{reset}' .. str .. '%{reset}')
 end
 
+local m = setmetatable({
+    noReset = replaceCodes,
+    softReset_str = "\x1b[!p", --Soft Reset WITHOUT Clear Screen
+}, {
+    __call = function (_, str) return ansicolors (str) end
+})
 
-return setmetatable({noReset = replaceCodes}, {__call = function (_, str) return ansicolors (str) end})
+return M
+
